@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = "North America's Investment Property Lender",
+  subtitle = 'LendCity <strong>specializes in working with investors</strong>. Our team is a group of <strong>seasoned investors and developers</strong>, allowing us to give you the best <strong>advice on investing and mortgage lending</strong>.',
+} = Astro.props;
+---
+
+<section class="section bg-dark-50">
+  <div class="container-site text-center">
+    <p class="text-caption uppercase tracking-wider text-dark-500 font-semibold mb-3">Our Locations</p>
+    <h2 class="text-headline md:text-display-sm mb-6">{title}</h2>
+    <a href="/investment-property-lending-locations/" class="link text-body-lg mb-8 inline-block">
+      View Your Options
+    </a>
+    <p class="text-body-lg text-dark-600 max-w-3xl mx-auto" set:html={subtitle} />
+    <p class="text-body-lg text-dark-600 mt-4">
+      We are set up to lend on Residential & Commercial in{' '}
+      <a href="/mortgage-financing-for-canadians-in-canada/" class="link">Canada</a>,{' '}
+      <a href="/mortgage-financing-for-canadians-in-the-u-s-a/" class="link">U.S.A.</a> and{' '}
+      <a href="/mortgage-financing-for-canadians-in-mexico/" class="link">Mexico</a>.
+    </p>
+  </div>
+</section>

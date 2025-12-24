@@ -1,0 +1,31 @@
+---
+interface Props {
+  tags: string[];
+  linked?: boolean;
+}
+
+const { tags, linked = true } = Astro.props;
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .trim();
+}
+---
+
+<div class="flex flex-wrap gap-2">
+  {tags.map((tag) => (
+    linked ? (
+      <a
+        href={`/tag/${slugify(tag)}/`}
+        class="badge-primary hover:bg-primary-200 transition-colors"
+      >
+        {tag}
+      </a>
+    ) : (
+      <span class="badge-primary">{tag}</span>
+    )
+  ))}
+</div>

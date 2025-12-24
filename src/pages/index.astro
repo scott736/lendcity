@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import LocationsSection from '../components/LocationsSection.astro';
+
+const pageTitle = 'Mortgage Financing for Investors';
+const pageDescription = 'Access the best mortgage financing for investors. LendCity specializes in residential, commercial, and investment property loans across Canada, USA, and Mexico.';
+
+const expertiseAreas = [
+  { name: 'Residential', href: '/residential-mortgage-financing/' },
+  { name: 'Developments', href: '/development-mortgage-financing/' },
+  { name: 'Flippers', href: '/flip-mortgage-financing/' },
+  { name: 'Multi-Family Properties', href: '/multi-family-mortgage-financing/' },
+  { name: 'Office Buildings', href: '/office-mortgage-financing/' },
+  { name: 'Padsplits', href: '/padsplit-mortgage-financing/' },
+  { name: 'Retail Plaza\'s', href: '/retail-mortgage-financing/' },
+];
+
+const countries = [
+  {
+    name: 'Canada',
+    href: '/mortgage-financing-for-canadians-in-canada/',
+    image: '/images/canada-mortgage-financing.webp',
+  },
+  {
+    name: 'U.S.A.',
+    href: '/mortgage-financing-for-canadians-in-the-u-s-a/',
+    image: '/images/usa-mortgage-financing.webp',
+  },
+  {
+    name: 'Mexico',
+    href: '/mortgage-financing-for-canadians-in-mexico/',
+    image: '/images/mexico-mortgage-financing.webp',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LendCity Mortgages",
+      "url": "https://lendcity.ca",
+      "logo": "https://lendcity.ca/images/lendcity-logo.webp",
+      "description": pageDescription,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4769 Wyandotte St E",
+        "addressLocality": "Windsor",
+        "addressRegion": "Ontario",
+        "postalCode": "N8W 5M8",
+        "addressCountry": "CA"
+      },
+      "areaServed": ["Canada", "United States", "Mexico"],
+      "sameAs": [
+        "https://www.facebook.com/lendcityprivateinvestorsgroup"
+      ]
+    })} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-dark-50 to-white overflow-hidden">
+    <div class="container-site py-16 md:py-24 lg:py-32">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Hero Content -->
+        <div class="text-center lg:text-left">
+          <h1 class="text-display-sm md:text-display lg:text-display-lg text-balance">
+            Access the <span class="text-primary-600">BEST</span> Mortgage Financing for Investors.
+          </h1>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a
+              href="https://outlook.office365.com/book/FreeStrategyCall@lendcity.ca/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary btn-lg"
+            >
+              Book A Strategy Call
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Image -->
+        <div class="relative">
+          <a href="/scott-dillingham/" class="block group">
+            <div class="relative rounded-2xl overflow-hidden shadow-strong">
+              <img
+                src="/images/scott-dillingham-hero.webp"
+                alt="Scott Dillingham - President of LendCity Mortgages"
+                width="600"
+                height="600"
+                class="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="eager"
+                fetchpriority="high"
+              />
+            </div>
+            <div class="mt-4 text-center lg:text-left">
+              <p class="text-primary-600 font-semibold">Scott Dillingham</p>
+              <p class="text-dark-500">President – LendCity</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Investor Focused Section -->
+  <section class="section bg-white">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <p class="text-caption uppercase tracking-wider text-primary-600 font-semibold mb-3">
+          Experienced Investors
+        </p>
+        <h2 class="text-headline md:text-display-sm mb-6">Investor Focused Lender</h2>
+        <p class="text-body-lg text-dark-600 mb-4">Our dedicated team offers:</p>
+        <p class="text-body-lg text-dark-600 mb-6">
+          Lending for{' '}
+          {expertiseAreas.map((area, index) => (
+            <>
+              <a href={area.href} class="link">{area.name}</a>
+              {index < expertiseAreas.length - 1 && ', '}
+            </>
+          ))}
+          {' '}and more.
+        </p>
+        <p class="text-body-lg text-dark-600 mb-6">
+          Not only do we broker mortgages, we're also investors, offering you the expertise you can't get anywhere else.
+          Our deep understanding of the financial landscape allows us to provide tailored solutions that meet your unique needs.
+          With our extensive network and resources, you can feel confident in navigating this dynamic market.
+        </p>
+        <p class="text-body-lg text-dark-600">
+          We lend in{' '}
+          <a href="/mortgage-financing-for-canadians-in-canada/" class="link">Canada</a>,{' '}
+          <a href="/mortgage-financing-for-canadians-in-the-u-s-a/" class="link">U.S.A.</a> &{' '}
+          <a href="/mortgage-financing-for-canadians-in-mexico/" class="link">Mexico</a>,
+          both <a href="/residential-mortgage-financing/" class="link">Residential</a> &{' '}
+          <a href="/mortgage-financing-for-canadians-in-canada/" class="link">Commercial</a>.
+        </p>
+      </div>
+
+      <!-- Country Cards -->
+      <div class="grid md:grid-cols-3 gap-6 mt-12">
+        {countries.map((country) => (
+          <a href={country.href} class="card-hover group">
+            <div class="aspect-card overflow-hidden">
+              <img
+                src={country.image}
+                alt={`Mortgage financing in ${country.name}`}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Locations Section -->
+  <LocationsSection />
+
+  <!-- CTA Section -->
+  <CTASection />
+</BaseLayout>

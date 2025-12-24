@@ -1,0 +1,182 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TOC from '../components/TOC.astro';
+import TagList from '../components/TagList.astro';
+import RelatedPosts from '../components/RelatedPosts.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  publishDate: Date;
+  updatedDate?: Date;
+  image: string;
+  imageAlt?: string;
+  tags?: string[];
+  author?: string;
+  readingTime?: number;
+  headings?: Array<{ depth: number; slug: string; text: string }>;
+}
+
+const {
+  title,
+  description,
+  publishDate,
+  updatedDate,
+  image,
+  imageAlt = title,
+  tags = [],
+  author = 'LendCity Team',
+  readingTime = 5,
+  headings = [],
+} = Astro.props;
+
+const formattedDate = publishDate.toLocaleDateString('en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description} image={image} type="article">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": title,
+      "description": description,
+      "image": new URL(image, Astro.site).href,
+      "datePublished": publishDate.toISOString(),
+      "dateModified": (updatedDate || publishDate).toISOString(),
+      "author": {
+        "@type": "Organization",
+        "name": author,
+        "url": "https://lendcity.ca"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LendCity Mortgages",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://lendcity.ca/images/lendcity-logo.webp"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": Astro.url.href
+      }
+    })} />
+  </Fragment>
+
+  <!-- Article Header with CTA -->
+  <section class="bg-dark-900 text-white py-8">
+    <div class="container-site">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="text-title font-bold">Ready to take action?</h2>
+          <p class="text-dark-300">Book a <strong>Free Strategy Call</strong> and develop the <strong>best plan</strong> for your needs.</p>
+        </div>
+        <div class="flex gap-3">
+          <a
+            href="https://outlook.office365.com/book/FreeStrategyCall@lendcity.ca/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accent"
+          >
+            Book A Call
+          </a>
+          <a href="/contact/" class="btn-ghost text-white hover:bg-white/10">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="section-sm">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_300px] gap-12">
+        <!-- Main Content -->
+        <div>
+          <!-- Article Header -->
+          <header class="mb-8">
+            <h1 class="text-display-sm md:text-display mb-6 text-balance">{title}</h1>
+
+            <!-- Featured Image -->
+            <div class="rounded-2xl overflow-hidden mb-6">
+              <img
+                src={image}
+                alt={imageAlt}
+                width="800"
+                height="450"
+                class="w-full aspect-hero object-cover"
+                loading="eager"
+              />
+            </div>
+
+            <!-- Meta -->
+            <div class="flex flex-wrap items-center gap-4 text-body-sm text-dark-500">
+              <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+              {formattedUpdatedDate && formattedUpdatedDate !== formattedDate && (
+                <span>Updated: {formattedUpdatedDate}</span>
+              )}
+              <span>{readingTime} min read</span>
+            </div>
+          </header>
+
+          <!-- Article Body -->
+          <div class="prose prose-lg max-w-none">
+            <slot />
+          </div>
+
+          <!-- Tags -->
+          {tags.length > 0 && (
+            <div class="mt-12 pt-8 border-t border-dark-200">
+              <p class="text-body-sm font-semibold text-dark-500 mb-3">
+                <a href="/tags/" class="hover:text-primary-600">Tags</a>:
+              </p>
+              <TagList tags={tags} />
+            </div>
+          )}
+
+          <!-- Related Posts -->
+          <RelatedPosts currentSlug={Astro.url.pathname} tags={tags} />
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:sticky lg:top-28 lg:self-start space-y-8">
+          <!-- TOC -->
+          {headings.length > 0 && (
+            <div class="card p-6">
+              <p class="text-body font-bold text-dark-900 mb-4">Table of Contents</p>
+              <TOC headings={headings} />
+            </div>
+          )}
+
+          <!-- Newsletter CTA -->
+          <div class="bg-primary-50 rounded-2xl p-6">
+            <p class="text-caption uppercase tracking-wider text-primary-600 font-semibold mb-2">
+              Exclusive Insights
+            </p>
+            <p class="text-title font-bold text-dark-900 mb-4">
+              Join LendCity's <span class="text-primary-600">Weekly Investor Insight</span>
+            </p>
+            <a
+              href="https://lendcity-network.myflodesk.com/investorinsight"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary w-full justify-center"
+            >
+              Join
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

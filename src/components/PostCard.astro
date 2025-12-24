@@ -1,0 +1,47 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  href: string;
+  image: string;
+  date: Date;
+  category?: string;
+}
+
+const { title, description, href, image, date, category } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="card-hover group">
+  <a href={href} class="block">
+    <div class="aspect-card overflow-hidden">
+      <img
+        src={image}
+        alt={title}
+        width="400"
+        height="250"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        loading="lazy"
+      />
+    </div>
+    <div class="p-5">
+      {category && (
+        <p class="text-caption text-primary-600 font-medium mb-2">{category}</p>
+      )}
+      <h2 class="text-title font-bold text-dark-900 group-hover:text-primary-600 transition-colors mb-2 line-clamp-2">
+        {title}
+      </h2>
+      {description && (
+        <p class="text-body-sm text-dark-500 line-clamp-2 mb-3">{description}</p>
+      )}
+      <time datetime={date.toISOString()} class="text-caption text-dark-400">
+        {formattedDate}
+      </time>
+    </div>
+  </a>
+</article>
