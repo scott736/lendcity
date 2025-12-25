@@ -8,7 +8,7 @@ dist/
 .astro/
 
 # Tina CMS
-tina/__generated__/
+# Note: tina/__generated__/ must be committed for TinaCloud to work
 
 # Environment
 .env
