@@ -3,6 +3,7 @@ interface NavChild {
   name: string;
   description: string;
   href: string;
+  letter?: string;
   icon?: string;
   external?: boolean;
 }
@@ -18,6 +19,7 @@ interface NavItem {
   href: string;
   children?: NavChild[];
   podcasts?: NavPodcast[];
+  menuType?: 'expertise' | 'resources';
 }
 
 const navigation: { main: NavItem[]; cta: { text: string; href: string } } = {
@@ -26,24 +28,26 @@ const navigation: { main: NavItem[]; cta: { text: string; href: string } } = {
     {
       name: 'Expertise',
       href: '#',
+      menuType: 'expertise',
       children: [
-        { name: 'Developments', description: 'New developments and construction.', href: '/development-mortgage-financing/', icon: 'developments' },
-        { name: 'Flipping', description: 'Access flip financing for your project.', href: '/flip-mortgage-financing/', icon: 'flipping' },
-        { name: 'Multi-Family', description: '5+ unit rental properties.', href: '/multi-family-mortgage-financing/', icon: 'multifamily' },
-        { name: 'Office Buildings', description: 'Low to mid rise office buildings.', href: '/office-mortgage-financing/', icon: 'office' },
-        { name: 'Padsplit', description: 'Co-living investment properties.', href: '/padsplit-mortgage-financing/', icon: 'padsplit' },
-        { name: 'Residential', description: 'One to four unit properties.', href: '/residential-mortgage-financing/', icon: 'residential' },
-        { name: 'Retail Plaza', description: 'Retail plaza & strip malls.', href: '/retail-mortgage-financing/', icon: 'retail' },
+        { name: 'Developments', description: 'New developments and construction.', href: '/development-mortgage-financing/', letter: 'D' },
+        { name: 'Flipping', description: 'Access flip financing for your project.', href: '/flip-mortgage-financing/', letter: 'F' },
+        { name: 'Multi-Family', description: '5+ unit rental properties.', href: '/multi-family-mortgage-financing/', letter: 'M' },
+        { name: 'Office Buildings', description: 'Low to mid rise office buildings.', href: '/office-mortgage-financing/', letter: 'O' },
+        { name: 'Padsplit', description: 'Co-living investment properties.', href: '/padsplit-mortgage-financing/', letter: 'P' },
+        { name: 'Residential', description: 'One to four unit properties.', href: '/residential-mortgage-financing/', letter: 'R' },
+        { name: 'Retail Plaza', description: 'Retail plaza & strip malls.', href: '/retail-mortgage-financing/', letter: 'R' },
       ],
     },
     {
       name: 'Investor Resources',
       href: '/investor-resources/',
+      menuType: 'resources',
       children: [
-        { name: 'Strategy Call', description: 'Create the best game plan for your financing.', href: 'https://outlook.office365.com/book/FreeStrategyCall@lendcity.ca/', external: true },
-        { name: 'Weekly Investor Insight', description: 'Access our best information we share only with this group', href: 'https://lendcity-network.myflodesk.com/', external: true },
-        { name: 'Private Facebook Group', description: 'Connect with like-minded investors', href: 'https://www.facebook.com/lendcityprivateinvestorsgroup', external: true },
-        { name: 'Investor Blog', description: 'Check out our amazing articles.', href: '/tags/' },
+        { name: 'Strategy Call', description: 'Create the best game plan for your financing.', href: 'https://outlook.office365.com/book/FreeStrategyCall@lendcity.ca/', icon: 'calendar', external: true },
+        { name: 'Weekly Investor Insight', description: 'Access our best information we share only with this group', href: 'https://lendcity-network.myflodesk.com/', icon: 'mail', external: true },
+        { name: 'Private Facebook Group', description: 'Connect with like-minded investors', href: 'https://www.facebook.com/lendcityprivateinvestorsgroup', icon: 'users', external: true },
+        { name: 'Investor Blog', description: 'Check out our amazing articles.', href: '/tags/', icon: 'book' },
       ],
       podcasts: [
         { name: 'Wisdom, Lifestyle Money Show', href: 'https://podcast.lendcity.ca/', image: '/images/wisdom-lifestyle-money-show.webp' },
@@ -93,58 +97,114 @@ const navigation: { main: NavItem[]; cta: { text: string; href: string } } = {
 
               <!-- Dropdown Menu -->
               <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div class="bg-white rounded-2xl shadow-strong p-6 min-w-[320px]">
-                  <p class="text-body-sm font-semibold text-dark-400 uppercase tracking-wider mb-4">
-                    {item.name === 'Expertise' ? 'Our Expertise:' : 'Investor Resources'}
-                  </p>
-                  <ul class="space-y-1">
-                    {item.children.map((child) => (
-                      <li>
-                        <a
-                          href={child.href}
-                          class="flex items-start gap-3 p-3 rounded-lg hover:bg-dark-50 transition-colors group/item"
-                          target={child.external ? '_blank' : undefined}
-                          rel={child.external ? 'noopener noreferrer' : undefined}
-                        >
-                          <div class="flex-1">
-                            <p class="font-semibold text-dark-900 group-hover/item:text-primary-600 transition-colors">
-                              {child.name}
-                              {child.external && (
-                                <svg class="inline w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
-                              )}
-                            </p>
-                            <p class="text-body-sm text-dark-500 mt-0.5">{child.description}</p>
-                          </div>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                <div class={`bg-white shadow-strong border border-dark-100 ${item.menuType === 'resources' ? 'p-6 min-w-[600px]' : 'p-6 min-w-[420px]'}`}>
+                  {item.menuType === 'expertise' ? (
+                    <!-- Expertise Menu with Letter Icons -->
+                    <div>
+                      <p class="text-xs font-medium text-dark-400 uppercase tracking-widest mb-4">
+                        Our Expertise:
+                      </p>
+                      <ul class="space-y-1">
+                        {item.children.map((child) => (
+                          <li>
+                            <a
+                              href={child.href}
+                              class="flex items-center gap-4 py-2 group/item"
+                            >
+                              <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-dark-900 text-white text-lg font-serif">
+                                {child.letter}
+                              </span>
+                              <div class="flex-1">
+                                <p class="font-medium text-dark-900 group-hover/item:text-primary-500 transition-colors">
+                                  {child.name}
+                                </p>
+                                <p class="text-sm text-dark-500">{child.description}</p>
+                              </div>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <!-- Resources Menu with Icons and Podcasts -->
+                    <div class="grid grid-cols-2 gap-8">
+                      <div>
+                        <ul class="space-y-1">
+                          {item.children.map((child) => (
+                            <li>
+                              <a
+                                href={child.href}
+                                class="flex items-center gap-3 py-2 group/item"
+                                target={child.external ? '_blank' : undefined}
+                                rel={child.external ? 'noopener noreferrer' : undefined}
+                              >
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-dark-600">
+                                  {child.icon === 'calendar' && (
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                  )}
+                                  {child.icon === 'mail' && (
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                  )}
+                                  {child.icon === 'users' && (
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                  )}
+                                  {child.icon === 'book' && (
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                  )}
+                                </span>
+                                <div class="flex-1">
+                                  <p class="font-medium text-dark-900 group-hover/item:text-primary-500 transition-colors">
+                                    {child.name}
+                                    {child.external && (
+                                      <svg class="inline w-3 h-3 ml-1 text-dark-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                      </svg>
+                                    )}
+                                  </p>
+                                </div>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                  {item.podcasts && (
-                    <div class="mt-6 pt-6 border-t border-dark-100 grid grid-cols-2 gap-4">
-                      {item.podcasts.map((podcast) => (
-                        <a
-                          href={podcast.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="group/podcast"
-                        >
-                          <div class="aspect-video rounded-lg overflow-hidden bg-dark-100 mb-2">
-                            <img
-                              src={podcast.image}
-                              alt={podcast.name}
-                              class="w-full h-full object-cover group-hover/podcast:scale-105 transition-transform duration-300"
-                              loading="lazy"
-                            />
-                          </div>
-                          <p class="text-body-sm font-semibold text-dark-900 group-hover/podcast:text-primary-600 transition-colors">
-                            {podcast.name}
+                      {item.podcasts && (
+                        <div class="border-l border-dark-100 pl-8">
+                          <p class="text-xs font-medium text-dark-400 uppercase tracking-widest mb-4">
+                            Podcasts
                           </p>
-                          <p class="text-caption text-primary-600">Listen Now</p>
-                        </a>
-                      ))}
+                          <div class="space-y-4">
+                            {item.podcasts.map((podcast) => (
+                              <a
+                                href={podcast.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="block group/podcast"
+                              >
+                                <div class="aspect-[16/9] overflow-hidden bg-dark-100 mb-2">
+                                  <img
+                                    src={podcast.image}
+                                    alt={podcast.name}
+                                    class="w-full h-full object-cover group-hover/podcast:scale-105 transition-transform duration-300"
+                                    loading="lazy"
+                                  />
+                                </div>
+                                <p class="text-sm font-medium text-dark-900 group-hover/podcast:text-primary-500 transition-colors">
+                                  {podcast.name}
+                                </p>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

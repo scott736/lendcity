@@ -12,27 +12,31 @@ const {
 } = Astro.props;
 ---
 
-<section class="section bg-dark-900 text-white">
-  <div class="container-site text-center">
-    <h2 class="text-headline md:text-display-sm mb-4">{title}</h2>
-    <p class="text-body-lg text-dark-300 max-w-2xl mx-auto mb-8" set:html={subtitle} />
-
-    {showButtons && (
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href="https://outlook.office365.com/book/FreeStrategyCall@lendcity.ca/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-accent btn-lg"
-        >
-          Book A Call
-        </a>
-        <a href="/contact/" class="btn-secondary btn-lg border-white text-white hover:bg-white/10">
-          Contact Us
-        </a>
+<section class="section">
+  <div class="container-site">
+    <div class="cta-box flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div class="md:max-w-xl">
+        <h2 class="text-headline mb-3">{title}</h2>
+        <p class="text-body text-dark-700" set:html={subtitle} />
       </div>
-    )}
 
-    <slot />
+      {showButtons && (
+        <div class="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+          <a
+            href="https://outlook.office365.com/book/FreeStrategyCall@lendcity.ca/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary"
+          >
+            Book A Call
+          </a>
+          <a href="/contact/" class="btn-secondary">
+            Contact Us
+          </a>
+        </div>
+      )}
+
+      <slot />
+    </div>
   </div>
 </section>
