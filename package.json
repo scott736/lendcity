@@ -7,8 +7,8 @@
     "dev": "TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"astro dev\"",
     "dev:astro": "astro dev",
     "start": "TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"astro dev\"",
-    "build": "tinacms build && astro check && astro build",
-    "build:local": "astro check && astro build",
+    "build": "astro check && astro build",
+    "build:tina": "tinacms build && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
