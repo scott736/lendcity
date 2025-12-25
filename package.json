@@ -4,9 +4,11 @@
   "description": "LendCity Mortgages - North America's Investment Property Lender",
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
+    "dev": "TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"astro dev\"",
+    "dev:astro": "astro dev",
+    "start": "TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"astro dev\"",
+    "build": "tinacms build && astro check && astro build",
+    "build:local": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -23,9 +25,12 @@
   "private": true,
   "dependencies": {
     "@astrojs/check": "^0.9.6",
+    "@astrojs/mdx": "^3.1.9",
     "@astrojs/tailwind": "^5.1.4",
+    "@tinacms/cli": "^2.0.5",
     "astro": "^4.16.18",
     "tailwindcss": "^3.4.17",
+    "tinacms": "^3.1.2",
     "typescript": "^5.9.3"
   }
 }
