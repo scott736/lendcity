@@ -5,14 +5,13 @@ interface Props {
   limit?: number;
 }
 
-const props = Astro.props;
-const _currentSlug = props.currentSlug;
-const _tags = props.tags;
-const _limit = props.limit ?? 3;
+const { currentSlug, tags, limit = 3 } = Astro.props;
 
-// This will be populated by the content collection in Phase 2
-// For now, it's a placeholder that shows the structure
+// Will be implemented in Phase 2 - fetch related posts by matching tags
 const relatedPosts: Array<{ href: string; image: string; title: string; category: string }> = [];
+
+// Suppress unused variable warnings (used in future implementation)
+void currentSlug; void tags; void limit;
 ---
 
 {relatedPosts.length > 0 && (
