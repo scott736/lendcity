@@ -1,4 +1,4 @@
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 export async function getSiteSettings() {
   try {
